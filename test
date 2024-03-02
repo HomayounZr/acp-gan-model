@@ -1,0 +1,9 @@
+    model = Sequential([
+        layers.Input(shape=(latent_dim,)),
+        layers.Dense(128, activation='relu'),
+        layers.Dense(256, activation='relu'),
+        layers.Dense(output_shape[0] * output_shape[1], activation='sigmoid'),
+        layers.Reshape(output_shape),
+        layers.Lambda(lambda x: tf.one_hot(tf.argmax(x, axis=-1), depth=output_shape[1])),
+        layers.Lambda(lambda x: tf.cast(x, dtype=tf.int32))
+    ])
